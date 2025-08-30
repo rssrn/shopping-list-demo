@@ -1,0 +1,131 @@
+/* Heading */
+
+h1 {
+  text-align: center;
+}
+
+/* Container */
+#shopping-list {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* Remove default list styling */
+#shopping-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+/* Each list item as flex row */
+#shopping-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Description input - flexible */
+#shopping-list input.desc {
+  flex: 1 1 auto;
+  padding: 6px 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Price input - fixed small width */
+#shopping-list input.price {
+  flex: 0 0 80px;
+  padding: 6px 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Checkbox larger */
+#shopping-list input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+/* Remove button - red */
+#shopping-list button.remove-item {
+  padding: 6px 12px;
+  font-size: 0.9em;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background-color: #ff4c4c;
+  color: #fff;
+}
+
+/* Button container */
+#shopping-list .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* New Item button - left */
+#shopping-list button#add-new {
+  padding: 8px 16px;
+  font-size: 1em;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background-color: #2196f3;
+  color: #fff;
+}
+
+/* Save button - centered */
+#shopping-list button#save {
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  #shopping-list li {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #shopping-list input.desc,
+  #shopping-list input.price,
+  #shopping-list button.remove-item {
+    width: 100%;
+  }
+
+  #shopping-list .buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #shopping-list button#save {
+    margin: 0 auto;
+  }
+}
+
+.error-message {
+  color: #b00020;           /* dark red text */
+  background-color: #fdd;   /* very light red background */
+  border: 1px solid #b00020;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-size: 1.1rem;        /* slightly larger text */
+  border-radius: 5px;       /* rounded corners */
+}

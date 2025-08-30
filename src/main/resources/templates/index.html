@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+
+<!-- standard header -->
+<div th:replace="~{fragments_gen.html :: header}"/>
+
+<!-- page content -->
+<h1>Shopping List (Ross Arnold demo)</h1>
+
+<form method="get" action="/list/show">
+    <button type="submit"></button>
+</form>
+</body>
+</html>
