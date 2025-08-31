@@ -61,7 +61,7 @@ h1 {
   border-radius: 4px;
   border: none;
   cursor: pointer;
-  background-color: #ff4c4c;
+  background-color: #cc0000;
   color: #fff;
 }
 
@@ -135,4 +135,27 @@ h1 {
   white-space: pre-wrap;
   display: flex;
   align-items: center;
+}
+
+/* Make rows visually draggable */
+#shopping-list ul li,
+#shopping-list ul li > div {
+  cursor: grab; /* shows the grab hand */
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+/* Change cursor and slightly highlight on drag */
+#shopping-list ul li:active {
+  cursor: grabbing;
+  background-color: #f0f0f0; /* subtle highlight while dragging */
+}
+
+/* Optional: add a "handle" icon */
+.drag-handle {
+  margin-right: 8px;
+  cursor: grab;
+  font-size: 18px;
+  color: #888;
 }

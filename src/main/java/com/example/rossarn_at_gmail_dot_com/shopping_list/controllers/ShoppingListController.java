@@ -75,6 +75,9 @@ public class ShoppingListController {
         ListItem newItem = new ListItem();
         newItem.setDescription("");
         newItem.setUser_id(1);
+        // new items should go to the end of the list
+        newItem.setOrder_index(Integer.MAX_VALUE);
+
         listItemRepository.save(newItem);
 
         // re-fetch all from db
@@ -87,11 +90,17 @@ public class ShoppingListController {
      * @param shoppingList
      */
     private void saveToRepository(ShoppingList shoppingList) {
+        int displayOrder = 0;
         for (ListItem item : shoppingList.getItems()) {
             // bootstrap - currently only supporting single-user operation
             item.setUser_id(DEFAULT_USER_ID);
+
             // prevent XSS - remove html/js from description field
             item.setDescription(Sanitizers.FORMATTING.sanitize(item.getDescription()));
+
+            // preserve user's ordering
+            item.setOrder_index(displayOrder++);
+
             // quirk of the serialiser, json serialisation can fail with null BigDecimals
             if (item.getPrice() == null) {
                 item.setPrice(BigDecimal.ZERO);
@@ -121,7 +130,7 @@ public class ShoppingListController {
                 .anyMatch(id -> !allowedIds.contains(id));
 
         if (hasNonPermittedIds) {
-            logger.warn("Possible IDOR attempt: user {} attempted to interact with unowned IDs", username);
+            logger.warn("Possible IDOR attempt: user {} attempted to interact with unowned ID(s)", username);
             return false;
         }
 

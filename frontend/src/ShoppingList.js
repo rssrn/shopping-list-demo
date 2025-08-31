@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from "react";
 
+import ShoppingListItem from './ShoppingListItem.js';
 
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 function ShoppingList() {
   const [items, setItems] = useState([]);
@@ -104,34 +119,66 @@ function ShoppingList() {
         });
   }
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
+  );
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      const oldIndex = items.findIndex((item) => item.id === active.id);
+      const newIndex = items.findIndex((item) => item.id === over.id);
+      setItems((items) => arrayMove(items, oldIndex, newIndex));
+    }
+  };
+
+  function SortableItem({ id, children }) {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+    } = useSortable({ id });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      cursor: "grab",
+    };
+
+    return (
+      <li ref={setNodeRef} style={style} {...attributes}>
+        <span {...listeners} className="drag-handle">☰</span>
+        {children}
+      </li>
+    );
+  }
+
   return (
     <div id="shopping-list">
       <div className="error-message">{error || ""}</div>
-      <ul>
-        {items.map((item) => (
-        <li key={item.id}>
-            <input
-              type="text"
-              className="desc"
-              value={item.description || ""}
-              onChange={(e) => handleChange(item.id, "description", e.target.value)}
-            />
-            <input
-              size="10"
-              type="text"
-              className="price"
-              value={item.price || ""}
-              onChange={(e) => handleChange(item.id, "price", e.target.value)}
-            />
-            <input
-              type="checkbox"
-              checked={item.is_marked_off}
-              onChange={(e) => handleChange(item.id, "is_marked_off", e.target.checked)}
-            />
-            <button className="remove-item" onClick={(e) => handleRemove(item.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext
+          items={items.map((item) => item.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <ul>
+            {items.map((item) => (
+            <ShoppingListItem
+              key={item.id}
+              item={item}
+              onChange={handleChange}
+              onRemove={handleRemove}
+             />
+             ))}
+          </ul>
+        </SortableContext>
+      </DndContext>
       <div className="buttons">
         <button id="add-new" onClick={handleAdd}>New Item</button>
         <button id="save" onClick={handleSave}>Save</button>
