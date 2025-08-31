@@ -31,12 +31,12 @@ Follow these steps before running:
 
 Summarising security features:
 
-| Item                                                  | Notes                                                                                                                                                                                                                                   |
-|-------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Secure user's information in transit.                 | Standard SSL/TLS.  Uses self-signed certificate for dev purposes.  Configured in [application.properties](src/main/resources/application.properties)                                                                                    |
-| Secure MySQL credentials and SSL keystore credentials | Sourced from environment variables, ingested via [application.properties](src/main/resources/application.properties)
-| XSS prevention                                        | Sanitise user-supplied data [see code here](src/main/java/com/example/rossarn_at_gmail_dot_com/shopping_list/controllers/ShoppingListController.java#L98-99)                                                                            |
-| IDOR prevention                                       | Prevent malicious users from manually hitting the backend and overwriting/deleting someone else's list items [see code here](src/main/java/com/example/rossarn_at_gmail_dot_com/shopping_list/controllers/ShoppingListController.java#L112-L139)
+| Item                                                  | Notes                                                                                                                                                                                                                                            |
+|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Secure user's information in transit.                 | Standard SSL/TLS.  Uses self-signed certificate for dev purposes.  Configured in [application.properties](src/main/resources/application.properties)                                                                                             |
+| Secure MySQL credentials and SSL keystore credentials | Sourced from environment variables, ingested via [application.properties](src/main/resources/application.properties)                                                                                                                             
+| XSS prevention                                        | Sanitise user-supplied data [see code here](src/main/java/com/example/rossarn_at_gmail_dot_com/shopping_list/controllers/ShoppingListController.java#L98-L99)                                                                                    |
+| IDOR prevention                                       | Prevent malicious users from manually hitting the backend and overwriting/deleting someone else's list items [see code here](src/main/java/com/example/rossarn_at_gmail_dot_com/shopping_list/controllers/ShoppingListController.java#L112-L139) 
 
 
 ## Future
