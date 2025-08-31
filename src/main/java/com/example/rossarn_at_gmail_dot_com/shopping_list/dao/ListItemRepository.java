@@ -13,7 +13,7 @@ public interface ListItemRepository extends CrudRepository<ListItem, Integer> {
 
 
     // @Query("select l from shopping_list_items l, users u where u.user_id = l.user_id and u.username = "default_user");
-    @Query("select l from ListItems l where user_id = 1")
+    @Query("select l from ListItems l where user_id = 1 order by order_index")
     public List<ListItem> getShoppingItemsForUser(@Param("username") String username);
 
 
