@@ -48,22 +48,15 @@ public class ShoppingListController {
         if (!allItemsValidForUser(shoppingList, DEFAULT_USER_NAME)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        for (ListItem item : shoppingList.getItems()) {
-            // currently only supporting single-user operation
-            item.setUser_id(DEFAULT_USER_ID);
-            // prevent XSS
-            item.setDescription(Sanitizers.FORMATTING.sanitize(item.getDescription()));
+        saveToRepository(shoppingList);
 
-            listItemRepository.save(item);
-        }
-        return shoppingList;
+        // re-fetch all from db
+        return getShoppingList();
     }
-
-
 
     @DeleteMapping("/{id}")
     public void deleteShoppingListItemById(@PathVariable Integer id) {
-        // TODO also add IDOR protection here
+        // TODO also add IDOR protection here, similar to the save operation
         listItemRepository.deleteById(id);
     }
 
@@ -76,14 +69,7 @@ public class ShoppingListController {
         if (!allItemsValidForUser(shoppingList, DEFAULT_USER_NAME)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-
-        for (ListItem item : shoppingList.getItems()) {
-            // currently only supporting single-user operation
-            item.setUser_id(DEFAULT_USER_ID);
-            // prevent XSS
-            item.setDescription(Sanitizers.FORMATTING.sanitize(item.getDescription()));
-            listItemRepository.save(item);
-        }
+        saveToRepository(shoppingList);
 
         // add new
         ListItem newItem = new ListItem();
@@ -93,6 +79,25 @@ public class ShoppingListController {
 
         // re-fetch all from db
         return getShoppingList();
+    }
+
+    /**
+     * Prepare shopping list data for saving, and save it
+     *
+     * @param shoppingList
+     */
+    private void saveToRepository(ShoppingList shoppingList) {
+        for (ListItem item : shoppingList.getItems()) {
+            // bootstrap - currently only supporting single-user operation
+            item.setUser_id(DEFAULT_USER_ID);
+            // prevent XSS - remove html/js from description field
+            item.setDescription(Sanitizers.FORMATTING.sanitize(item.getDescription()));
+            // quirk of the serialiser, json serialisation can fail with null BigDecimals
+            if (item.getPrice() == null) {
+                item.setPrice(BigDecimal.ZERO);
+            }
+            listItemRepository.save(item);
+        }
     }
 
     /**
@@ -114,9 +119,6 @@ public class ShoppingListController {
         boolean hasNonPermittedIds = proposedItems.stream()
                 .map(ListItem::getId)
                 .anyMatch(id -> !allowedIds.contains(id));
-
-        logger.info("Allowed IDs: {}", allowedIds);
-        logger.info("Proposed items: {}", proposedItems);
 
         if (hasNonPermittedIds) {
             logger.warn("Possible IDOR attempt: user {} attempted to interact with unowned IDs", username);

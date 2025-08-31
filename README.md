@@ -10,7 +10,7 @@ This is a coding exercise.  The main objectives are:
 
 * Frontend is ReactJS, one component. [Link to code](frontend/src/ShoppingList.js)
 * Backend is a REST API in Java + Spring Boot. [Link to code](src/main/java/com/example/rossarn_at_gmail_dot_com/shopping_list)
-* Data store is MySQL. [Link to code](db/)
+* Data store is MySQL. [Link to schema](db/schema.sql)
 * Backend unit tests - [Link to tests](src/test/java/com/example/rossarn_at_gmail_dot_com/shopping_list)
 
 ## Setup

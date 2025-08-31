@@ -121,11 +121,18 @@ h1 {
 }
 
 .error-message {
-  color: #b00020;           /* dark red text */
-  background-color: #fdd;   /* very light red background */
-  border: 1px solid #b00020;
-  padding: 10px 15px;
-  margin-bottom: 15px;
-  font-size: 1.1rem;        /* slightly larger text */
-  border-radius: 5px;       /* rounded corners */
+  height: 1.5em;
+  margin: 10px 0;
+}
+
+.error-message:not(:empty) {
+  color: #bb0000;
+  font-size: 1.2em;
+  padding: 4px;
+  border: 1px solid #bb0000;
+  border-radius: 1px;
+  background-color: #ffe5e5;
+  white-space: pre-wrap;
+  display: flex;
+  align-items: center;
 }

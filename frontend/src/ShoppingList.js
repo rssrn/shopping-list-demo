@@ -31,7 +31,7 @@ function ShoppingList() {
 
     // validation for the price field
     if (fieldname === "price") {
-      const priceRegex = /^(?:\d+)(?:\.\d{0,2})?$/;
+      const priceRegex = /^(?:\d*)(?:\.\d{0,2})?$/;
       if (!priceRegex.test(value)) {
         setError("price fields must be decimal currency, max 2 decimal places")
       } else {
@@ -106,7 +106,7 @@ function ShoppingList() {
 
   return (
     <div id="shopping-list">
-      {error && <div className="error-message">{error}</div>}
+      <div className="error-message">{error || ""}</div>
       <ul>
         {items.map((item) => (
         <li key={item.id}>
