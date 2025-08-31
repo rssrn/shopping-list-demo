@@ -8,7 +8,7 @@ This is a coding exercise.  The main objectives are:
 
 ## Overview
 
-* Frontend is ReactJS, one component. [Link to code](frontend/src/ShoppingList.js)
+* Frontend is ReactJS, one main component. [Link to code](frontend/src/ShoppingList.js)
 * Backend is a REST API in Java + Spring Boot. [Link to code](src/main/java/com/example/rossarn_at_gmail_dot_com/shopping_list)
 * Data store is MySQL. [Link to schema](db/schema.sql)
 * Backend unit tests - [Link to tests](src/test/java/com/example/rossarn_at_gmail_dot_com/shopping_list)
@@ -35,8 +35,8 @@ Summarising security features:
 |-------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Secure user's information in transit.                 | Standard SSL/TLS.  Uses self-signed certificate for dev purposes.  Configured in [application.properties](src/main/resources/application.properties) |
 | Secure MySQL credentials and SSL keystore credentials | Sourced from environment variables, ingested via [application.properties](src/main/resources/application.properties)                                 
-| XSS prevention                                        | Sanitise user-supplied data                                                                                                                          |
-| IDOR prevention                                       | Prevent malicious users from manually hitting the backend and overwriting/deleting someone else's list items
+| XSS prevention                                        | Sanitise user-supplied data [see code here](java/com/example/rossarn_at_gmail_dot_com/shopping_list/controllers/ShoppingListController.java#L98-99)  |
+| IDOR prevention                                       | Prevent malicious users from manually hitting the backend and overwriting/deleting someone else's list items [see code here](java/com/example/rossarn_at_gmail_dot_com/shopping_list/controllers/ShoppingListController.java#L112-L139)                                        
 
 
 ## Future
