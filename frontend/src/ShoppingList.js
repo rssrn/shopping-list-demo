@@ -80,7 +80,9 @@ function ShoppingList() {
     })
       .then((response) => {
         if (response.ok) {
-            setItems(items.filter(item => item.id !== id));
+            const updatedItems = items.filter(item => item.id !== id)
+            setItems(updatedItems);
+            updateTotalPrice(updatedItems);
           } else {
             throw new Error("Failed to delete");
           }
