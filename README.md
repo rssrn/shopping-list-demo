@@ -20,7 +20,7 @@ Follow these steps before running:
 1. Create a MySQL DB called shoppinglist populated with [the schema](db/schema.sql).
 1. Create a MySQL user called shoppinglist with a password of your choice.
 1. In [application.properties](src/main/resources/application.properties) set `spring.datasource.url` to point to your MySQL server's location.
-1. In [application.properties](src/main/resources/application.properties) set `server.ssl.*` to point to a valid keystore, or comment those out to skip SSL and run over plain HTTP. If choosing to run over plain HTTP, also update the frontend [package.json](frontend/package.json) to include `"proxy": "http://localhost:9090"` 
+1. The backend is capable of SSL/TLS but the committed version uses plain http for ease of review (generating and installing the keystore and certs is a bit time-consuming).  If enabling SSL refer `server.ssl.*` in [application.properties](src/main/resources/application.properties).
 1. Set environment variables:
     * **SHOPPINGLIST_MYSQL_PASSWORD** to the password of your shoppinglist mysql user
     * **SHOPPINGLIST_KEYSTORE_PASSWORD** to the password of your keystore
