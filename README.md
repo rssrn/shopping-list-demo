@@ -45,8 +45,8 @@ If more time were available, next steps could include:
 * More comprehensive unit tests
 * End-to-end / integration / automated frontend tests
 * Improve front end input validation and error handling / user-facing error messages
-* Implement remaining scenarios: drag-and-drop re-ordering, multiuser feature
-* Improve UX/layout/CSS
+* Implement remaining scenarios: email and multiuser features
+* Improve UX/accessibility/layout/CSS
 
 ## Use of Generative AI
 
