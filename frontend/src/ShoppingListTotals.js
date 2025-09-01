@@ -17,7 +17,7 @@ function ShoppingListTotals({ totalPrice }) {
   return (
     <div id="budget">
       <span>total</span>
-      <span id="total-price">{totalPrice}</span>
+      <span id="total-price">{Number(totalPrice).toFixed(2)}</span>
       <span>of budget</span>
       <input
         className={totalPrice > budget ? "over-budget" : "in-budget" }
