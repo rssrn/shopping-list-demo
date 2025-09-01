@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import ShoppingListItem from './ShoppingListItem.js';
+import ShoppingListTotals from './ShoppingListTotals';
 
 import {
   DndContext,
@@ -20,6 +21,7 @@ import { CSS } from "@dnd-kit/utilities";
 function ShoppingList() {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // Fetch items from the Spring API
   useEffect(() => {
@@ -30,6 +32,7 @@ function ShoppingList() {
       })
       .then((data) => {
         setItems(data.items);
+        updateTotalPrice(data.items);
       })
       .catch((error) => {
         console.error("Error fetching items:", error);
@@ -44,16 +47,31 @@ function ShoppingList() {
     );
     setItems(updated);
 
-    // validation for the price field
     if (fieldname === "price") {
+      // validation
       const priceRegex = /^(?:\d*)(?:\.\d{0,2})?$/;
       if (!priceRegex.test(value)) {
         setError("price fields must be decimal currency, max 2 decimal places")
       } else {
         setError(null);
       }
+
+      updateTotalPrice(updated);
+
     }
+
   };
+
+  const updateTotalPrice = (latestItems) => {
+        let sum = 0;
+        for (const item of latestItems) {
+          const parsed = parseFloat(item.price);
+          if (!isNaN(parsed)) {
+            sum += parsed;
+          }
+        }
+        setTotalPrice(sum);
+  }
 
   const handleRemove = (id) => {
     setError(null);
@@ -179,6 +197,9 @@ function ShoppingList() {
           </ul>
         </SortableContext>
       </DndContext>
+
+      <ShoppingListTotals totalPrice={totalPrice}/>
+
       <div className="buttons">
         <button id="add-new" onClick={handleAdd}>New Item</button>
         <button id="save" onClick={handleSave}>Save</button>

@@ -159,3 +159,45 @@ h1 {
   font-size: 18px;
   color: #888;
 }
+
+#budget {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+#budget span {
+  font-weight: 500;
+}
+
+#budget #total-price {
+  font-weight: bold;
+  color: #2a1d8f; /* teal highlight */
+  margin: 0 0.25rem;
+}
+
+#budget input {
+  width: 80px;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  text-align: right;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#budget input.in-budget {
+  border: 2px solid green;
+  color: green;
+  font-weight: bold;
+}
+
+#budget input.over-budget {
+  border: 2px solid red;
+  color: red;
+  font-weight: bold;
+}
